@@ -1,0 +1,28 @@
+<dx-form [formData]="member" [colCount]="1" labelLocation="top">
+  <dxi-item
+    dataField="name"
+    editorType="dxTextBox"
+    [isRequired]="true"
+    label="Name"
+  ></dxi-item>
+  <dxi-item
+    dataField="age"
+    editorType="dxNumberBox"
+    [isRequired]="true"
+    label="Age"
+  ></dxi-item>
+  <dxi-item
+    dataField="belt"
+    editorType="dxTextBox"
+    [isRequired]="true"
+    label="Belt"
+  ></dxi-item>
+
+  <dxi-item itemType="button">
+    <dx-button
+      text="Add Member"
+      type="success"
+      (onClick)="onSubmit()"
+    ></dx-button>
+  </dxi-item>
+</dx-form>
