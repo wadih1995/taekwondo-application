@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-member-list',
@@ -9,8 +10,10 @@ import { Member } from '../../models/member';
 })
 export class MemberListComponent implements OnInit {
   members: Member[] = [];
+  isPopupVisible = false;
+  selectedMember: any = null;
 
-  constructor(private memberService: MemberService) {}
+  constructor(private memberService: MemberService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadMembers();
@@ -30,4 +33,23 @@ export class MemberListComponent implements OnInit {
       });
     }
   };
+
+  openEditPopup = (e: any) => {
+    this.selectedMember = { ...e.row.data }; // shallow copy to avoid auto-updating the grid
+    this.isPopupVisible = true;
+  };
+
+  updateMember() {
+    const url = `http://localhost:3000/api/members/${this.selectedMember.id}`;
+    this.http.put(url, this.selectedMember).subscribe({
+      next: () => {
+        alert('Member updated successfully!');
+        this.isPopupVisible = false;
+        this.loadMembers();
+      },
+      error: () => {
+        alert('Failed to update member.');
+      },
+    });
+  }
 }
