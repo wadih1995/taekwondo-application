@@ -14,4 +14,8 @@ export class MemberService {
   getMembers(): Observable<Member[]> {
     return this.http.get<Member[]>(this.apiUrl);
   }
+
+  deleteMember(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

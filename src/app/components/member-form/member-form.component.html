@@ -1,28 +1,49 @@
-<dx-form [formData]="member" [colCount]="1" labelLocation="top">
-  <dxi-item
-    dataField="name"
-    editorType="dxTextBox"
-    [isRequired]="true"
-    label="Name"
-  ></dxi-item>
-  <dxi-item
-    dataField="age"
-    editorType="dxNumberBox"
-    [isRequired]="true"
-    label="Age"
-  ></dxi-item>
-  <dxi-item
-    dataField="belt"
-    editorType="dxTextBox"
-    [isRequired]="true"
-    label="Belt"
-  ></dxi-item>
+<form (ngSubmit)="onSubmit()" #formElement="ngForm">
+  <dx-validation-group>
+    <dx-form [formData]="member" [colCount]="1" labelLocation="top">
+      <dxi-item dataField="name" label="Name">
+        <dx-text-box [(value)]="member.name" validationGroup="memberForm">
+          <dx-validator validationGroup="memberForm">
+            <dxi-validation-rule
+              type="required"
+              message="Name is required"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </dxi-item>
 
-  <dxi-item itemType="button">
+      <dxi-item dataField="age" label="Age">
+        <dx-number-box [(value)]="member.age" validationGroup="memberForm">
+          <dx-validator validationGroup="memberForm">
+            <dxi-validation-rule
+              type="required"
+              message="Age is required"
+            ></dxi-validation-rule>
+            <dxi-validation-rule
+              type="numeric"
+              message="Age must be a number"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-number-box>
+      </dxi-item>
+
+      <dxi-item dataField="belt" label="Belt">
+        <dx-text-box [(value)]="member.belt" validationGroup="memberForm">
+          <dx-validator validationGroup="memberForm">
+            <dxi-validation-rule
+              type="required"
+              message="Belt is required"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </dxi-item>
+    </dx-form>
+
     <dx-button
       text="Add Member"
       type="success"
-      (onClick)="onSubmit()"
+      [useSubmitBehavior]="true"
+      validationGroup="memberForm"
     ></dx-button>
-  </dxi-item>
-</dx-form>
+  </dx-validation-group>
+</form>

@@ -13,8 +13,21 @@ export class MemberListComponent implements OnInit {
   constructor(private memberService: MemberService) {}
 
   ngOnInit(): void {
+    this.loadMembers();
+  }
+
+  loadMembers() {
     this.memberService.getMembers().subscribe((data) => {
       this.members = data;
     });
   }
+
+  deleteMember = (e: any) => {
+    const id = e.row?.data?.id;
+    if (id && confirm('Are you sure you want to delete this member?')) {
+      this.memberService.deleteMember(id).subscribe(() => {
+        this.members = this.members.filter((member) => member.id !== id);
+      });
+    }
+  };
 }

@@ -1,12 +1,29 @@
-<h2>Taekwondo Club Members</h2>
-
-<ul *ngIf="members.length; else noMembers">
-  <li *ngFor="let member of members">
-    <strong>{{ member.name }}</strong> - Age: {{ member.age }} - Belt:
-    {{ member.belt }}
-  </li>
-</ul>
-
-<ng-template #noMembers>
-  <p>No members found.</p>
-</ng-template>
+<dx-data-grid
+  [dataSource]="members"
+  [showBorders]="true"
+  [columnAutoWidth]="true"
+  [allowColumnResizing]="true"
+>
+  <dxo-paging [pageSize]="5"></dxo-paging>
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[5, 10, 20]"
+    [showInfo]="true"
+  ></dxo-pager>
+  <dxo-editing
+    mode="row"
+    [allowDeleting]="false"
+    [allowUpdating]="false"
+  ></dxo-editing>
+  <dxi-column dataField="id" caption="ID" [allowEditing]="false"></dxi-column>
+  <dxi-column dataField="name" caption="Name"></dxi-column>
+  <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
+  <dxi-column dataField="belt" caption="Belt"></dxi-column>
+  <dxi-column type="buttons">
+    <dxi-button
+      icon="trash"
+      hint="Delete"
+      [onClick]="deleteMember"
+    ></dxi-button>
+  </dxi-column>
+</dx-data-grid>
